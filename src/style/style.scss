@@ -1,3 +1,139 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --theme-color: #e448dc;
+}
+
+body {
+  background-image: url(../img/bg.jpg);
+  background-position: center;
+  background-size: cover;
+
+  padding: 0;
+  margin: 0;
+}
+
+button {
+  border-top: 2px solid #bdbdbd;
+  border-left: 2px solid #bdbdbd;
+  border-bottom: 2px solid #535353;
+  border-right: 2px solid #535353;
+  border-radius: 4px;
+  cursor: pointer;
+
+  &:active {
+    border-top: 2px solid #7a7a7a;
+    border-left: 2px solid #7a7a7a;
+    border-bottom: 2px solid #6e6e6e;
+    border-right: 2px solid #6e6e6e;
+
+    opacity: 0.95;
+  }
+
+  &:hover {
+    opacity: 0.9;
+  }
+}
+
 .main-container {
-  
+
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 48px 32px;
+
+    .social-buttons {
+      display: flex;
+      gap: 8px;
+
+      button {
+        padding: 6px;
+        background-color: rgb(48, 55, 92);
+        color: white;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        
+      }
+    }
+
+    .connect-button {
+      button {
+        background-color: var(--theme-color);
+        color: white;
+        font-size: 16px;
+        padding: 4px 14px;
+
+        &:disabled {
+          background-color: #00000000;
+          border-color: #00000000;
+          cursor:no-drop;
+        }
+      }
+    }
+  }
+
+  main {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    color: white;
+
+    p {
+      width: 50%;
+      min-width: 320px;
+      max-width: 600px;
+      margin-top: 0;
+      text-align: center;
+    }
+
+    .counter {
+      margin-top: 24px;
+      display: flex;
+      align-items: center;
+
+      button {
+        width: 28px;
+        height: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        background-color: var(--theme-color);
+      }
+
+      div {
+        width: 60px;
+        height: 22px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: white;
+        color: black;
+      }
+    }
+
+    .mint-button {
+      padding: 16px 0 40px 0;
+      
+      button {
+        padding: 6px 24px;
+        background-color: var(--theme-color);
+        color: white;
+      }
+    }
+  }
 }

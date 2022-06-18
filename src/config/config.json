@@ -1,4 +1,10 @@
 {
   "contractAddress": "0xD7b517770a36F393Edd4228169bf31C22f6569c2",
-  "chainId": 4
+  "chainId": 4,
+  "maxMintCnt": 2,
+  "link": {
+    "opensea": "https://opensea.io",
+    "etherscan": "https://etherscan.io/",
+    "twitter": "https://twitter.com"
+  }
 }

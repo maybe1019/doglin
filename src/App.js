@@ -30,7 +30,15 @@ function App() {
 
   const handleMint = async () => {
     const web3 = new Web3(library.provider)
-    const contract = new web3.eth.Contract(abi, config.contractAddress)
+    const contract = new web3.eth.Contract(abi, config.contractAddress, {from: account})
+
+    const balance = await contract.methods.balanceOf(account).call()
+    
+    if(parseInt(balance) + mintCnt > config.maxMintCnt) {
+      window.alert(`You already have ${balance} NFTs in your wallet.`)
+      return
+    }
+
     await contract.methods.mint(mintCnt).send({
       from: account,
       gas: 1500000

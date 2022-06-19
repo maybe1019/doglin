@@ -1,6 +1,7 @@
 import './style/style.scss'
 import config from './config/config.json'
 import abi from './config/abi.json'
+import whitelist from './config/whitelist.json'
 
 import { ReactComponent as Twitter } from './img/twitter.svg';
 import { ReactComponent as Etherscan } from './img/etherscan.svg';
@@ -8,12 +9,19 @@ import { ReactComponent as Opensea } from './img/opensea.svg';
 import React, { useState } from 'react'
 import { useEthers } from '@usedapp/core';
 import Web3 from 'web3';
+import { MerkleTree } from 'merkletreejs';
+import keccak256 from 'keccak256';
+
 
 function App() {
 
   const { account, chainId, library, activateBrowserWallet } = useEthers()
 
   const [mintCnt, setMintCnt] = useState(1)
+
+  const leafNodes = whitelist.map(addr => keccak256(addr))
+  const merkleTree = new MerkleTree(leafNodes, keccak256, { sortPairs: true })
+//  const rootHash = merkleTree.getRoot()
 
   const handleMintCnt = (c) => {
     let t = mintCnt + c
@@ -33,16 +41,34 @@ function App() {
     const contract = new web3.eth.Contract(abi, config.contractAddress, {from: account})
 
     const balance = await contract.methods.balanceOf(account).call()
-    
+    const step = await contract.methods.step().call()
+
     if(parseInt(balance) + mintCnt > config.maxMintCnt) {
       window.alert(`You already have ${balance} NFTs in your wallet.`)
       return
     }
 
-    await contract.methods.mint(mintCnt).send({
-      from: account,
-      gas: 1500000
-    })
+    if(step === '1') {
+      if(whitelist.indexOf(account) === -1) {
+        window.alert("You are not on whitelist")
+        return
+      }
+      const claimingNode = leafNodes[whitelist.indexOf(account)]
+      const hexProof = merkleTree.getHexProof(claimingNode)
+      console.log(hexProof)
+
+      await contract.methods.privateMint(hexProof, mintCnt).send({
+        from: account,
+        gas: 1500000
+      })
+    }
+
+    else {
+      await contract.methods.publicMint(mintCnt).send({
+        from: account,
+        gas: 1500000
+      })
+    }
   }
 
   return (

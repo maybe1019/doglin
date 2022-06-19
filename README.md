@@ -1,2 +1,2 @@
-# NFT
-NFT Minting
+# doglin
+DOGLIN NFT

@@ -3,10 +3,10 @@ DOGLIN is 10K NFT collection.
 
 #### Guide
 
-###### Whitelist
+##### Whitelist
 Update `src/config/whitelist.json` with your latest whitelist.
 
-###### Configuration
+##### Configuration
 File: `src/config/config.json`
 
 `contractAddress`: The address of the smart contract you deployed.
